@@ -68,17 +68,12 @@ class ColumnTestRecommendation:
     to: str = ""
     field: str = ""
 
-    def to_yaml_dict(self) -> dict:
-        d: dict = {"name": self.test}
+    def to_yaml_dict(self) -> str | dict:
         if self.values:
-            d["config"] = {}
-            d = {"name": "accepted_values", "config": {"values": self.values}}
+            return {"accepted_values": {"values": self.values}}
         if self.to and self.field:
-            d = {
-                "name": "relationships",
-                "config": {"to": self.to, "field": self.field},
-            }
-        return d
+            return {"relationships": {"to": self.to, "field": self.field}}
+        return self.test
 
 
 @dataclass
@@ -99,7 +94,7 @@ class TestRecommendation:
 
         model_entry: dict = {"name": self.model_name}
         if self.model_tests:
-            model_entry["data_tests"] = [{"name": t} for t in self.model_tests]
+            model_entry["data_tests"] = self.model_tests
         if columns:
             model_entry["columns"] = columns
 

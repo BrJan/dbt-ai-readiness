@@ -188,9 +188,7 @@ class AutopilotRunner:
             model_entry["columns"] = list(col_map.values())
 
             if result.test_result.model_tests:
-                model_entry["data_tests"] = [
-                    {"name": t} for t in result.test_result.model_tests
-                ]
+                model_entry["data_tests"] = result.test_result.model_tests
 
         patch_content = {
             "version": 2,
